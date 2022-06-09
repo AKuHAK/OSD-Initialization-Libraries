@@ -1,3 +1,4 @@
+#include <debug.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -244,7 +245,7 @@ int PS2DiscBoot(void)
     const char *pChar, *cnf_start, *cnf_end;
     int fd, size, size_remaining, size_read;
 
-    printf("ExecutePs2GameDisc\n");
+    scr_printf("ExecutePs2GameDisc\n");
 
     switch (PS2GetBootFile(ps2disc_boot))
     {
@@ -257,7 +258,7 @@ int PS2DiscBoot(void)
     // The browser uses open mode 5 when a specific thread is created, otherwise mode 4.
     if ((fd = open("cdrom0:\\SYSTEM.CNF;1", O_RDONLY)) < 0)
     {
-        printf("Can't open SYSTEM.CNF\n");
+        scr_printf("Can't open SYSTEM.CNF\n");
         BootError();
     }
 
@@ -271,7 +272,7 @@ int PS2DiscBoot(void)
     {
         if ((size_read = read(fd, system_cnf, size_remaining)) <= 0)
         {
-            printf("Can't read SYSTEM.CNF\n");
+            scr_printf("Can't read SYSTEM.CNF\n");
             BootError();
         }
     }
@@ -302,6 +303,8 @@ int PS2DiscBoot(void)
     }
 
     args[0] = ps2disc_boot;
+
+    scr_printf("Game ID: %s\n", ps2disc_boot);
 
     CleanUp();
     UpdatePlayHistory(ps2disc_boot);
