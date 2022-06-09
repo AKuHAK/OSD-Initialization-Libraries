@@ -128,7 +128,10 @@ static int PS2GetBootFile(char *boot)
 #endif
 
     if (sceCdReadKey(0, 0, 0x004B, key1) == 0)
+    {
+        scr_printf("sceCdReadKey(0, 0, 0x004B, key1");
         return 2;
+    }
 
     switch (sceCdGetError())
     {
@@ -139,6 +142,7 @@ static int PS2GetBootFile(char *boot)
         case 0: // Success condition
             break;
         default:
+            scr_printf("sceCdGetError = %X", sceCdGetError());
             return 2;
     }
 
