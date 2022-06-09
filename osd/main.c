@@ -217,7 +217,7 @@ int main(int argc, char *argv[])
     SetGsVParam(OSDConfigGetVideoOutput() == VIDEO_OUTPUT_RGB ? 0 : 1);
 
     init_scr();
-    scr_printf("SIDIF Mode:\t%u\n"
+    scr_printf("version 1834:\t%u\n"
                "Screen type:\t%u\n"
                "Video mode:\t%u\n"
                "Language:\t%u\n"

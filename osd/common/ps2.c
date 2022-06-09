@@ -127,12 +127,14 @@ static int PS2GetBootFile(char *boot)
     u8 key2[16];
 #endif
 
+    scr_printf("sceCdReadKey(0, 0, 0x004B, key1 start");
     if (sceCdReadKey(0, 0, 0x004B, key1) == 0)
     {
         scr_printf("sceCdReadKey(0, 0, 0x004B, key1");
         return 2;
     }
 
+    scr_printf("sceCdGetError start");
     switch (sceCdGetError())
     {
         case SCECdErREAD:
@@ -259,6 +261,7 @@ int PS2DiscBoot(void)
             return 3;
     }
 
+    scr_printf("cdrom0:\\SYSTEM.CNF;1 parse\n");
     // The browser uses open mode 5 when a specific thread is created, otherwise mode 4.
     if ((fd = open("cdrom0:\\SYSTEM.CNF;1", O_RDONLY)) < 0)
     {
