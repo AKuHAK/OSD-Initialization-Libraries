@@ -308,6 +308,7 @@ int PS2DiscBoot(void)
 
     SifExitCmd();
     // LoadExecPS2("rom0:PS2LOGO", 1, args);
+    LoadExecPS2(ps2disc_boot, 0, NULL);
 
     return 0;
 }
