@@ -307,7 +307,7 @@ int PS2DiscBoot(void)
     UpdatePlayHistory(ps2disc_boot);
 
     SifExitCmd();
-    LoadExecPS2("rom0:PS2LOGO", 1, args);
+    // LoadExecPS2("rom0:PS2LOGO", 1, args);
 
     return 0;
 }

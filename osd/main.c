@@ -238,9 +238,9 @@ int main(int argc, char *argv[])
 
     /*    If required, make any changes with the getter/setter functions in OSDConfig.h, before calling OSDConfigSave(1).
     Example: */
-/*     OSDConfigSetScreenType(TV_SCREEN_169);
-    OSDConfigSave(0);
-    OSDConfigApply(); */
+    /*     OSDConfigSetScreenType(TV_SCREEN_169);
+        OSDConfigSave(0);
+        OSDConfigApply(); */
 
     scr_printf("\nModel:\t\t%s\n"
                "PlayStation Driver:\t%s\n"
@@ -315,6 +315,7 @@ int main(int argc, char *argv[])
                     ValidDiscInserted = 1;
                     break;
                 default:
+                    ValidDiscInserted = 1;
                     scr_printf("Unknown\n");
             }
         }
@@ -338,6 +339,7 @@ int main(int argc, char *argv[])
         case SCECdPS2CD:
         case SCECdPS2CDDA:
         case SCECdPS2DVD:
+        case SCECdUNKNOWN:
             // Boot PlayStation 2 disc
             PS2DiscBoot();
             break;
