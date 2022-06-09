@@ -7,7 +7,7 @@ WRITE_ICOBYSYS = 0
 PROHBIT_DVD_0100 = 0
 
 #Enable to enable the newer sceCdReadKey checks, which are only supported by a newer CDVDMAN module.
-XCDVD_READKEY = 0
+XCDVD_READKEY = 1
 
 #Enable to build the PSX example.
 PSX = 0
