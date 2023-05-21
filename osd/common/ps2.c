@@ -1,3 +1,4 @@
+#include <debug.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -127,7 +128,10 @@ static int PS2GetBootFile(char *boot)
 #endif
 
     if (sceCdReadKey(0, 0, 0x004B, key1) == 0)
+    {
+        scr_printf("sceCdReadKey(0, 0, 0x004B, key1");
         return 2;
+    }
 
     switch (sceCdGetError())
     {
@@ -138,6 +142,7 @@ static int PS2GetBootFile(char *boot)
         case 0: // Success condition
             break;
         default:
+            scr_printf("sceCdGetError = %X", sceCdGetError());
             return 2;
     }
 
@@ -244,7 +249,7 @@ int PS2DiscBoot(void)
     const char *pChar, *cnf_start, *cnf_end;
     int fd, size, size_remaining, size_read;
 
-    printf("ExecutePs2GameDisc\n");
+    scr_printf("ExecutePs2GameDisc\n");
 
     switch (PS2GetBootFile(ps2disc_boot))
     {
@@ -257,7 +262,7 @@ int PS2DiscBoot(void)
     // The browser uses open mode 5 when a specific thread is created, otherwise mode 4.
     if ((fd = open("cdrom0:\\SYSTEM.CNF;1", O_RDONLY)) < 0)
     {
-        printf("Can't open SYSTEM.CNF\n");
+        scr_printf("Can't open SYSTEM.CNF\n");
         BootError();
     }
 
@@ -271,7 +276,7 @@ int PS2DiscBoot(void)
     {
         if ((size_read = read(fd, system_cnf, size_remaining)) <= 0)
         {
-            printf("Can't read SYSTEM.CNF\n");
+            scr_printf("Can't read SYSTEM.CNF\n");
             BootError();
         }
     }
@@ -303,11 +308,15 @@ int PS2DiscBoot(void)
 
     args[0] = ps2disc_boot;
 
+    scr_printf("Game ID: %s\n", ps2disc_boot);
+
     CleanUp();
     UpdatePlayHistory(ps2disc_boot);
 
     SifExitCmd();
     LoadExecPS2("rom0:PS2LOGO", 1, args);
+    // if PS2LOGO region does not match someone can run it without ps2logo
+    // LoadExecPS2(ps2disc_boot, 0, NULL);
 
     return 0;
 }

@@ -64,7 +64,9 @@ static void InitPSX()
     sceCdInit(SCECdINoD);
 
     // No need to perform boot certification because rom0:OSDSYS does it.
-    while (sceCdChgSys(2) != 2) {}; // Switch the drive into PS2 mode.
+    while (sceCdChgSys(2) != 2)
+    {
+    }; // Switch the drive into PS2 mode.
 
     // Signal the start of a game, so that the user can use the "quit" game button.
     do
@@ -73,7 +75,9 @@ static void InitPSX()
     } while ((result == 0) || (stat & 0x80));
 
     // Reset the IOP again to get the standard PS2 default modules.
-    while (!SifIopReset("", 0)) {};
+    while (!SifIopReset("", 0))
+    {
+    };
 
     /*    Set the EE kernel into 32MB mode. Let's do this, while the IOP is being reboot.
         The memory will be limited with the TLB. The remap can be triggered by calling the _InitTLB syscall
@@ -83,7 +87,9 @@ static void InitPSX()
     SetMemoryMode(1);
     _InitTLB();
 
-    while (!SifIopSync()) {};
+    while (!SifIopSync())
+    {
+    };
 }
 #endif
 
@@ -109,7 +115,9 @@ int main(int argc, char *argv[])
        This special IOPRP image contains a IOPBTCONF list that lists PCDVDMAN instead of CDVDMAN.
        PCDVDMAN is the board-specific CDVDMAN module on all PSX, which can be used to switch the CD/DVD drive operating mode.
        Usually, I would discourage people from using board-specific modules, but I do not have a proper replacement for this. */
-    while (!SifIopRebootBuffer(psx_ioprp, size_psx_ioprp)) {};
+    while (!SifIopRebootBuffer(psx_ioprp, size_psx_ioprp))
+    {
+    };
 #endif
     while (!SifIopSync())
     {
@@ -217,7 +225,7 @@ int main(int argc, char *argv[])
     SetGsVParam(OSDConfigGetVideoOutput() == VIDEO_OUTPUT_RGB ? 0 : 1);
 
     init_scr();
-    scr_printf("SIDIF Mode:\t%u\n"
+    scr_printf("SPDIF mode:\t%u\n"
                "Screen type:\t%u\n"
                "Video mode:\t%u\n"
                "Language:\t%u\n"
@@ -238,9 +246,10 @@ int main(int argc, char *argv[])
 
     /*    If required, make any changes with the getter/setter functions in OSDConfig.h, before calling OSDConfigSave(1).
     Example: */
-/*     OSDConfigSetScreenType(TV_SCREEN_169);
-    OSDConfigSave(0);
-    OSDConfigApply(); */
+    /*
+        OSDConfigSetScreenType(TV_SCREEN_169);
+        OSDConfigSave(0);
+        OSDConfigApply(); */
 
     scr_printf("\nModel:\t\t%s\n"
                "PlayStation Driver:\t%s\n"
@@ -315,6 +324,7 @@ int main(int argc, char *argv[])
                     ValidDiscInserted = 1;
                     break;
                 default:
+                    // ValidDiscInserted = 1;
                     scr_printf("Unknown\n");
             }
         }
@@ -338,6 +348,8 @@ int main(int argc, char *argv[])
         case SCECdPS2CD:
         case SCECdPS2CDDA:
         case SCECdPS2DVD:
+        // for mechapwn if detection failed
+        // case SCECdUNKNOWN:
             // Boot PlayStation 2 disc
             PS2DiscBoot();
             break;
